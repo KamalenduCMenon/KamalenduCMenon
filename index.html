@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kamalendu C Menon — AI/ML Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #060810;
+      --surface: #0d1117;
+      --border: #1e2630;
+      --accent: #00e5ff;
+      --accent2: #7c3aed;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --grid: rgba(0,229,255,0.03);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow orb */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(6,8,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 40px;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--text); }
+
+    nav ul {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 80px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,229,255,0.07);
+      border: 1px solid rgba(0,229,255,0.2);
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 28px;
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 72px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .stat-item {}
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .stat-num span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 80px;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(22px, 3vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 48px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-card {
+      background: var(--surface);
+      padding: 32px;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+    }
+
+    .skill-card:hover { background: #111827; }
+    .skill-card:hover::before { height: 100%; }
+
+    .skill-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .skill-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      background: rgba(0,229,255,0.06);
+      border: 1px solid rgba(0,229,255,0.15);
+      color: var(--muted);
+      font-size: 10px;
+      padding: 3px 10px;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,229,255,0.03), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(0,229,255,0.3);
+      transform: translateY(-4px);
+    }
+
+    .project-card:hover::after { opacity: 1; }
+
+    .project-type {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .project-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.2s;
+    }
+
+    .project-link:hover { gap: 10px; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text { color: var(--muted); font-size: 14px; line-height: 1.9; }
+    .about-text p + p { margin-top: 20px; }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding-bottom: 32px;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 20px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .tl-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .tl-year {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .tl-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .tl-place {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link-icon {
+      width: 36px; height: 36px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    .big-email {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      display: block;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+
+    .big-email:hover { color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 24px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    footer p { color: var(--muted); font-size: 12px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      nav ul { display: none; }
+      #hero, section { padding: 100px 24px 60px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .stats-row { gap: 28px; flex-wrap: wrap; }
+      .contact-inner { flex-direction: column; align-items: flex-start; }
+      footer { flex-direction: column; gap: 8px; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-tag">Open to opportunities</div>
+    <h1>
+      Where Data Meets<br/>
+      <span class="highlight">Intelligence.</span>
+    </h1>
+    <p class="hero-sub">
+      Hi, I'm <strong style="color:var(--text)">Kamalendu C Menon</strong> — AI/ML Engineer with a MEng in Applied AI.<br/>
+      I bridge research and production — building intelligent systems across speech, vision, and data at scale.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects →</a>
+      <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Years in Tech</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2<span>+</span></div>
+        <div class="stat-label">Years as Dev</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-label">GitHub Projects</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">AI Domains</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Expertise</div>
+    <h2 class="section-title reveal">What I Do</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-name">Machine Learning & Deep Learning</div>
+        <p style="color:var(--muted);font-size:13px;">Designing and training ML/DL models for real-world tasks — from classification and regression to complex neural architectures.</p>
+        <div class="skill-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">TensorFlow</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎙️</div>
+        <div class="skill-name">Speech & Signal Processing</div>
+        <p style="color:var(--muted);font-size:13px;">Voice diarization, speaker segmentation, dataset curation, and model fine-tuning for speech-based AI — with hands-on industry experience at Vosyn.</p>
+        <div class="skill-tags">
+          <span class="tag">OpenAI APIs</span>
+          <span class="tag">GCP</span>
+          <span class="tag">Model Fine-Tuning</span>
+          <span class="tag">DSP</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🧠</div>
+        <div class="skill-name">Generative AI & LLM Agents</div>
+        <p style="color:var(--muted);font-size:13px;">Building agentic systems, document analyzers, and LLM-powered workflows that automate complex reasoning and development tasks.</p>
+        <div class="skill-tags">
+          <span class="tag">LLM Agents</span>
+          <span class="tag">OpenAI</span>
+          <span class="tag">RAG</span>
+          <span class="tag">Prompt Engineering</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🏗️</div>
+        <div class="skill-name">Full-Stack & Cloud Development</div>
+        <p style="color:var(--muted);font-size:13px;">Building scalable REST APIs, cloud-native applications, and full-stack systems — with production experience across enterprise clients.</p>
+        <div class="skill-tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">Spring Boot</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">GCP</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Data Analytics & SQL</div>
+        <p style="color:var(--muted);font-size:13px;">Exploratory analysis, structured querying, and business intelligence — turning raw data into actionable insight through PostgreSQL, pandas, and visualization.</p>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Pandas</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔬</div>
+        <div class="skill-name">QA, Testing & Automation</div>
+        <p style="color:var(--muted);font-size:13px;">End-to-end test automation, performance benchmarking, and CI/CD integration — built custom Selenium frameworks for large-scale healthcare systems at UST.</p>
+        <div class="skill-tags">
+          <span class="tag">Selenium</span>
+          <span class="tag">JMeter</span>
+          <span class="tag">JIRA</span>
+          <span class="tag">Agile</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Work</div>
+    <h2 class="section-title reveal">Featured Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <div class="project-type">Agentic AI · LLM Systems</div>
+        <div class="project-name">Agent-Driven Feature Development System</div>
+        <div class="project-desc">An autonomous agent system that drives end-to-end software feature development — from understanding requirements to generating, testing, and refining code using LLM-powered workflows.</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">LLM Agents</span>
+          <span class="tag">Generative AI</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/KamalenduCMenon/Agent-Driven-Feature-Development-System" class="project-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-type">Deep Learning · Academic Research</div>
+        <div class="project-name">Deep Learning Projects</div>
+        <div class="project-desc">A collection of deep learning experiments completed at the University of Ottawa under Prof. Yongyi Mao — covering architectures, optimization, and applied neural network tasks.</div>
+        <div class="skill-tags">
+          <span class="tag">Jupyter</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">Neural Networks</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/KamalenduCMenon/Deep-Learning-Projects" class="project-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-type">Fraud Detection · ML Pipeline</div>
+        <div class="project-name">Fraud Detection Pipeline</div>
+        <div class="project-desc">End-to-end machine learning pipeline for identifying fraudulent transactions. Covers data ingestion, feature engineering, model training, and evaluation on imbalanced financial data.</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Pandas</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/KamalenduCMenon/Fraud-Detection-Pipeline" class="project-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-type">Document AI · NLP</div>
+        <div class="project-name">AI Document Analyzer</div>
+        <div class="project-desc">An AI-powered document analysis tool that extracts insights, summarizes content, and answers questions from uploaded documents using large language model capabilities.</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">LLM</span>
+          <span class="tag">NLP</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/KamalenduCMenon/AI-Document-Analyzer" class="project-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-type">Data Analytics · SQL</div>
+        <div class="project-name">SaaS Postgres Analytics</div>
+        <div class="project-desc">Analytical workflows built on top of a PostgreSQL-backed SaaS dataset — exploring user behavior, retention patterns, and business KPIs through structured queries and visualizations.</div>
+        <div class="skill-tags">
+          <span class="tag">Jupyter</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Pandas</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/KamalenduCMenon/SaaS-Postgres-Analytics" class="project-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+      <div class="project-card reveal">
+        <div class="project-type">Deep Learning · PyTorch</div>
+        <div class="project-name">Python PyTorch Experiments</div>
+        <div class="project-desc">Hands-on PyTorch implementations spanning tensors, autograd, custom datasets, training loops, and model architectures — a practical deep learning reference built from the ground up.</div>
+        <div class="skill-tags">
+          <span class="tag">PyTorch</span>
+          <span class="tag">Python</span>
+          <span class="tag">Jupyter</span>
+        </div>
+        <div class="project-footer">
+          <a href="https://github.com/KamalenduCMenon/Python-PyTorch" class="project-link" target="_blank">View on GitHub →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">Background</div>
+    <h2 class="section-title reveal">About Me</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I hold a Master's in Applied Artificial Intelligence from the University of Ottawa (GPA 3.9/4.0) and an MTech in Signal Processing — giving me a strong foundation across AI, deep learning, and signal systems.</p>
+        <p>My career spans software development, AI engineering, and QA — from building REST APIs and cloud-native apps at Epoq Zero, to researching voice diarization and fine-tuning speech models at Vosyn, to developing automation frameworks for healthcare systems at UST.</p>
+        <p>I'm passionate about translating research into production-ready AI — whether that's an agentic LLM system, a fraud detection pipeline, or a scalable analytics workflow.</p>
+        <div style="margin-top:32px;">
+          <a href="https://www.linkedin.com/in/kamalendu-menon/" target="_blank" class="btn btn-ghost">View LinkedIn →</a>
+        </div>
+      </div>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-year">Aug 2024 — Nov 2024</div>
+            <div class="tl-role">AI Software Developer Intern</div>
+            <div class="tl-place">Vosyn · Remote, Canada</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-year">Sep 2023 — Jun 2025</div>
+            <div class="tl-role">MEng, Applied Artificial Intelligence</div>
+            <div class="tl-place">University of Ottawa · GPA 3.9/4.0</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-year">Aug 2021 — Aug 2023</div>
+            <div class="tl-role">Software Developer & Tester</div>
+            <div class="tl-place">UST · Trivandrum, India</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot"></div>
+          <div>
+            <div class="tl-year">Aug 2019 — Jul 2021</div>
+            <div class="tl-role">MTech, Signal Processing</div>
+            <div class="tl-place">APJ Abdul Kalam Tech University · 9.21/10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Let's Talk</div>
+    <h2 class="section-title reveal">Get In Touch</h2>
+    <div class="contact-inner reveal">
+      <div>
+        <a href="mailto:kamalendu@email.com" class="big-email">Let's connect</a>
+        <div class="contact-links">
+          <a href="https://github.com/KamalenduCMenon" class="contact-link" target="_blank">
+            <div class="contact-link-icon">⌥</div>
+            github.com/KamalenduCMenon
+          </a>
+          <a href="https://www.linkedin.com/in/kamalendu-menon/" class="contact-link" target="_blank">
+            <div class="contact-link-icon">in</div>
+            linkedin.com/in/kamalendu-menon
+          </a>
+        </div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);padding:40px;flex:1;max-width:400px;">
+        <p style="color:var(--muted);font-size:13px;line-height:1.9;">
+          Open to full-time roles, freelance data/AI projects, and research collaborations.<br/><br/>
+          Especially interested in: applied ML, AI product development, and analytics infrastructure.
+        </p>
+        <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">Status</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;">
+            <div style="width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite;"></div>
+            Available for new projects
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Kamalendu C Menon · Built with HTML &amp; CSS</p>
+    <p style="color:var(--border);font-size:12px;">AI · ML · DATA · ANALYTICS</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
