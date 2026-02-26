@@ -5,7 +5,7 @@
 MEng in Applied Artificial Intelligence from the University of Ottawa (GPA 3.9/4.0). I build production-ready AI systems — from LLM agents and speech models to fraud detection pipelines and analytics workflows.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-kamalendu--menon-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/kamalendu-menon/)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-00e5ff?style=flat&logo=github&logoColor=white)](https://kamalenducmenon.github.io)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-00e5ff?style=flat&logo=github&logoColor=white)](https://kamalenducmenon.github.io/KamalenduCMenon/)
 
 ---
 
