@@ -50,14 +50,6 @@ MEng in Applied Artificial Intelligence from the University of Ottawa (GPA 3.9/4
 | [SaaS Postgres Analytics](https://github.com/KamalenduCMenon/SaaS-Postgres-Analytics) | Analytical workflows on SaaS data — retention, KPIs, user behavior | PostgreSQL, Pandas, Jupyter |
 | [Python PyTorch Experiments](https://github.com/KamalenduCMenon/Python-PyTorch) | Hands-on PyTorch implementations from tensors to full training loops | PyTorch, Python |
 
----
-
-## GitHub Stats
-
-<p align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=KamalenduCMenon&show_icons=true&theme=dark&hide_border=true&bg_color=060810&title_color=00e5ff&icon_color=00e5ff&text_color=e2e8f0" height="160"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=KamalenduCMenon&layout=compact&theme=dark&hide_border=true&bg_color=060810&title_color=00e5ff&text_color=e2e8f0" height="160"/>
-</p>
 
 ---
 
